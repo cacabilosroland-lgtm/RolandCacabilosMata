@@ -1,0 +1,142 @@
+import time
+
+inventory = []
+
+def slow_print(text):
+    for char in text:
+        print(char, end="", flush=True)
+        time.sleep(0.02)
+    print()
+
+def title_screen():
+    print("\n==============================")
+    print("      THE MISSING JEWEL")
+    print("==============================\n")
+    input("Press Enter to start...")
+
+def get_choice(options):
+    while True:
+        choice = input("Choose (A/B/C): ").upper()
+        if choice in options:
+            return choice
+        else:
+            print("Invalid choice. Try again.")
+
+def show_inventory():
+    print("\nInventory:")
+    if not inventory:
+        print(" - Empty")
+    else:
+        for item in inventory:
+            print(" -", item)
+
+def scene_start():
+    slow_print("You are a detective called to solve a jewel theft.")
+    slow_print("The mansion is full of suspects.")
+    slow_print("Where will you investigate first?")
+
+    print("\nA) The living room")
+    print("B) The kitchen")
+    print("C) The garden")
+
+    choice = get_choice(["A","B","C"])
+
+    if choice == "A":
+        living_room()
+    elif choice == "B":
+        kitchen_scene()
+    else:
+        garden_scene()
+
+def living_room():
+    slow_print("\nYou inspect the living room and find a clue note.")
+    inventory.append("Clue Note")
+    show_inventory()
+
+    slow_print("A suspicious guest approaches you.")
+
+    print("\nA) Question the guest")
+    print("B) Ignore and search more")
+    print("C) Accuse the guest")
+
+    choice = get_choice(["A","B","C"])
+
+    if choice == "A":
+        good_ending()
+    elif choice == "B":
+        neutral_ending()
+    else:
+        bad_ending()
+
+def kitchen_scene():
+    slow_print("\nYou enter the kitchen and find a knife.")
+    inventory.append("Knife")
+    show_inventory()
+
+    slow_print("The chef looks nervous.")
+
+    print("\nA) Talk to the chef")
+    print("B) Search the cabinets")
+    print("C) Leave immediately")
+
+    choice = get_choice(["A","B","C"])
+
+    if choice == "A":
+        neutral_ending()
+    elif choice == "B":
+        good_ending()
+    else:
+        bad_ending()
+
+def garden_scene():
+    slow_print("\nYou walk into the garden and find footprints.")
+    inventory.append("Footprint Clue")
+    show_inventory()
+
+    slow_print("You hear someone running away!")
+
+    print("\nA) Chase the suspect")
+    print("B) Examine the footprints")
+    print("C) Call for backup")
+
+    choice = get_choice(["A","B","C"])
+
+    if choice == "A":
+        bad_ending()
+    elif choice == "B":
+        good_ending()
+    else:
+        neutral_ending()
+
+def good_ending():
+    slow_print("\nYou solve the case and recover the jewel!")
+    slow_print("GOOD ENDING")
+
+def bad_ending():
+    slow_print("\nThe thief escapes... case unsolved.")
+    slow_print("BAD ENDING")
+
+def neutral_ending():
+    slow_print("\nYou gather some clues, but the mystery remains.")
+    slow_print("BAD ENDING")
+
+def main():
+    title_screen()
+
+    while True:
+        inventory.clear()
+        scene_start()
+
+        print("\nPlay again?")
+        print("A) Yes")
+        print("B) No")
+        print("C) Exit Game")
+
+        choice = get_choice(["A","B","C"])
+
+        if choice == "B" or choice == "C":
+            print("Thanks for playing!")
+            break
+
+main()
+
